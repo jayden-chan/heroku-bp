@@ -1,10 +1,10 @@
 # Variables for the app name and heroku email address
 variable "app_name" {
-  typr = "string"
+  type = "string"
 }
 
 variable "heroku_email" {
-  typr = "string"
+  type = "string"
 }
 
 # Setup the Heroku provider. The HEROKU_API_KEY env var needs to be
