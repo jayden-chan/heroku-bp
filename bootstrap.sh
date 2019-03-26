@@ -38,12 +38,12 @@ rm -rf .git
 git init
 
 cd app
-carg build --release
+cargo build
 
 # Let Terraform do the rest of the project setup
 cd ../terraform
 terraform init
-terraform apply
+terraform apply -var app_name="$1"
 
 # Self destruct. If we made it this far we know the script succeeded
 # thanks to set -e
