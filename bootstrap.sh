@@ -24,9 +24,6 @@ if ! [ -x "$(command -v git)" ]; then
   exit 1
 fi
 
-# Show the commands as they're being executed
-set -v
-
 # Rename this folder to the project name provided
 cd ..
 mv heroku-bp $1
@@ -51,5 +48,4 @@ cd ..
 rm bootstrap.sh
 
 echo "Setup complete!"
-
-set +ev
+set +e
