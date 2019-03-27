@@ -11,10 +11,11 @@ use rocket_contrib::databases::postgres;
 #[database("pg_db")]
 struct DbConn(postgres::Connection);
 
-#[get("/")]
-fn hello() -> &'static str {
-    "Hello world!"
-}
+struct Entry {
+    pub title: String,
+    pub number: i16,
+    pub published: bool,
+};
 
 #[get("/ping")]
 fn ping() -> &'static str {
@@ -24,12 +25,6 @@ fn ping() -> &'static str {
 #[get("/test")]
 fn test(conn: DbConn) -> String {
     for row in &conn.query("SELECT title, number, published FROM data LIMIT 1", &[]).unwrap() {
-        struct Entry {
-            pub title: String,
-            pub number: i16, 
-            pub published: bool,
-        };
-
         let res = Entry {
             title: row.get(0),
             number: row.get(1),
