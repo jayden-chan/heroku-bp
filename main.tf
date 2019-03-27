@@ -25,7 +25,7 @@ resource "heroku_build" "default" {
   buildpacks = ["https://github.com/emk/heroku-buildpack-rust.git"]
 
   source = {
-    path = "../app"
+    path = "./app"
     version = "0.0.1"
   }
 }

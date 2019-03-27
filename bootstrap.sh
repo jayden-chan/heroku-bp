@@ -3,9 +3,9 @@
 # Exit on any command failure
 set -e
 
-if [ $# -eq 0 ]
-  then
-    echo "No project name provided. Aborting."
+if [ $# -le 1 ]; then
+    echo "Usage:"
+    echo "     ./bootstrap.sh <project name> <email>"
     exit 1
 fi
 
@@ -43,7 +43,7 @@ cargo build
 # Let Terraform do the rest of the project setup
 cd ../terraform
 terraform init
-terraform apply -var app_name="$1"
+terraform apply -var app_name="$1" -var heroku_email="$2"
 
 # Self destruct. If we made it this far we know the script succeeded
 # thanks to set -e
