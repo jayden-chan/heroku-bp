@@ -35,13 +35,12 @@ cd app
 cargo build
 
 # Let Terraform do the rest of the project setup
-cd ../terraform
+cd ..
 terraform init
 terraform apply -var app_name="$1" -var heroku_email="$2"
 
 # Self destruct. If we made it this far we know the script succeeded
 # thanks to set -e
-cd ..
 rm bootstrap.sh
 
 echo "Setup complete!"
