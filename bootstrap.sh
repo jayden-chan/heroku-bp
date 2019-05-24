@@ -21,8 +21,6 @@ for d in $dependencies; do
     command -v $d >/dev/null 2>&1 || { echo >&2 "This program requires \`$d\`. Exiting"; exit 1; }
 done
 
-exit 0
-
 # Rename this folder to the project name provided
 cd ..
 mv heroku-bp $1
