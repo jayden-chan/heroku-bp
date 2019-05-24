@@ -15,7 +15,7 @@ struct Entry {
     pub title: String,
     pub number: i16,
     pub published: bool,
-};
+}
 
 #[get("/ping")]
 fn ping() -> &'static str {
@@ -58,6 +58,6 @@ fn main() {
 
     rocket::custom(config)
         .attach(DbConn::fairing())
-        .mount("/", routes![hello, ping, test])
+        .mount("/", routes![ping, test])
         .launch();
 }

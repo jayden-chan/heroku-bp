@@ -3,9 +3,11 @@
 # Exit on any command failure
 set -e
 
-if [ $# -le 1 ]; then
+if [ $# -le 1 ] || [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
     echo "Usage:"
     echo "     ./bootstrap.sh <project name> <email>"
+    echo
+    echo "Dependencies: Git, Terraform, Rust"
     exit 1
 fi
 
@@ -14,15 +16,10 @@ if [ -d "../$1" ]; then
     exit 1
 fi
 
-if ! [ -x "$(command -v terraform)" ]; then
-  echo "Terraform is not installed. Aborting." >&2
-  exit 1
-fi
-
-if ! [ -x "$(command -v git)" ]; then
-  echo "Git is not installed (wut??). Aborting." >&2
-  exit 1
-fi
+dependencies=("git", "terraform", "cargo")
+for d in dependencies; do
+    command -v $1 >/dev/null 2>&1 || { echo >&2 "This program requires \`$1\`. Exiting"; exit 1; }
+done
 
 # Rename this folder to the project name provided
 cd ..
