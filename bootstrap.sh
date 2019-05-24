@@ -18,7 +18,7 @@ fi
 
 dependencies=("git", "terraform", "cargo")
 for d in dependencies; do
-    command -v $1 >/dev/null 2>&1 || { echo >&2 "This program requires \`$1\`. Exiting"; exit 1; }
+    command -v $d >/dev/null 2>&1 || { echo >&2 "This program requires \`$d\`. Exiting"; exit 1; }
 done
 
 # Rename this folder to the project name provided
