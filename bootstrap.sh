@@ -3,11 +3,11 @@
 # Exit on any command failure
 set -e
 
-if [ $# -le 1 ] || [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+if [ $# -lt 1 ] || [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
     echo "Usage:"
     echo "     ./bootstrap.sh <project name> <email>"
     echo
-    echo "Dependencies: Git, Terraform, Rust"
+    echo "Dependencies: Git, Terraform, Rust, Heroku CLI"
     exit 1
 fi
 
