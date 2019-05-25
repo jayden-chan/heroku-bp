@@ -43,6 +43,7 @@ heroku config:set APP_BASE=app -a $1
 
 # Self destruct. If we made it this far we know the script succeeded
 # thanks to set -e
+cd ..
 rm bootstrap.sh
 
 # Commit and deploy
