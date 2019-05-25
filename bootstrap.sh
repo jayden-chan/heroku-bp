@@ -16,7 +16,7 @@ if [ -d "../$1" ]; then
     exit 1
 fi
 
-dependencies=('git' 'terraform' 'cargo')
+dependencies=('git' 'terraform' 'cargo' 'heroku')
 for d in $dependencies; do
     command -v $d >/dev/null 2>&1 || { echo >&2 "This program requires \`$d\`. Exiting"; exit 1; }
 done
@@ -34,10 +34,12 @@ git init
 cd app
 cargo build
 
-# Let Terraform do the rest of the project setup
-cd ..
-terraform init
-terraform apply -var app_name="$1" -var heroku_email="$2"
+# Create the app
+heroku apps:create $1
+heroku addons:create heroku-postgresql:hobby-dev -a $1
+heroku buildpacks:add https://github.com/lstoll/heroku-buildpack-monorepo -a $1
+heroku buildpacks:add emk/rust
+heroku config:set APP_BASE=app -a $1
 
 # Self destruct. If we made it this far we know the script succeeded
 # thanks to set -e
