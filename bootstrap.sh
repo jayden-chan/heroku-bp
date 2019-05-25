@@ -38,12 +38,17 @@ cargo build
 heroku apps:create $1
 heroku addons:create heroku-postgresql:hobby-dev -a $1
 heroku buildpacks:add https://github.com/lstoll/heroku-buildpack-monorepo -a $1
-heroku buildpacks:add emk/rust
+heroku buildpacks:add emk/rust -a $1
 heroku config:set APP_BASE=app -a $1
 
 # Self destruct. If we made it this far we know the script succeeded
 # thanks to set -e
 rm bootstrap.sh
+
+# Commit and deploy
+git add --all
+git commit -m "(bootstrap.sh) Initial commit"
+git push heroku master
 
 echo "Setup complete!"
 set +e
