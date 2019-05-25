@@ -41,15 +41,15 @@ heroku buildpacks:add https://github.com/lstoll/heroku-buildpack-monorepo -a $1
 heroku buildpacks:add emk/rust -a $1
 heroku config:set APP_BASE=app -a $1
 
+# Commit and deploy
+git add --all
+git commit -m "(bootstrap.sh) Initial commit"
+git push heroku HEAD:master
+
 # Self destruct. If we made it this far we know the script succeeded
 # thanks to set -e
 cd ..
 rm bootstrap.sh
-
-# Commit and deploy
-git add --all
-git commit -m "(bootstrap.sh) Initial commit"
-git push heroku master
 
 echo "Setup complete!"
 set +e
