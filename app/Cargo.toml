@@ -6,8 +6,17 @@ edition = "2018"
 
 [dependencies]
 rocket = "*"
+uuid = "*"
+
+[dependencies.serde]
+version = "*"
+features = ["derive"]
+
+[dependencies.postgres]
+version = "*"
+features = ["with-uuid"]
 
 [dependencies.rocket_contrib]
 version = "*"
 default-features = false
-features = ["postgres_pool"]
+features = ["postgres_pool", "json"]

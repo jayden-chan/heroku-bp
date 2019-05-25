@@ -6,36 +6,8 @@
 use std::env;
 use std::collections::HashMap;
 use rocket::config::{Config, Environment, Value};
-use rocket_contrib::databases::postgres;
 
-#[database("pg_db")]
-struct DbConn(postgres::Connection);
-
-struct Entry {
-    pub title: String,
-    pub number: i16,
-    pub published: bool,
-}
-
-#[get("/ping")]
-fn ping() -> &'static str {
-    "Hello there from the /ping endpoint!"
-}
-
-#[get("/test")]
-fn test(conn: DbConn) -> String {
-    for row in &conn.query("SELECT title, number, published FROM data LIMIT 1", &[]).unwrap() {
-        let res = Entry {
-            title: row.get(0),
-            number: row.get(1),
-            published: row.get(2),
-        };
-
-        return format!("Title: {} Number: {}, Published {}", res.title, res.number, res.published);
-    }
-
-    String::from("No results")
-}
+mod routes;
 
 fn main() {
     let port = env::var("PORT")
@@ -57,7 +29,11 @@ fn main() {
         .unwrap();
 
     rocket::custom(config)
-        .attach(DbConn::fairing())
-        .mount("/", routes![ping, test])
+        .attach(routes::DbConn::fairing())
+        .mount("/", routes![
+               routes::ping,
+               routes::test,
+               routes::post
+        ])
         .launch();
 }
