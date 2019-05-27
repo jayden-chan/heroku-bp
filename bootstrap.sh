@@ -44,6 +44,8 @@ heroku config:set APP_BASE=app -a $1
 # Commit and deploy
 git add --all
 git commit -m "(bootstrap.sh) Initial commit"
+
+git remote add heroku https://git.heroku.com/$1.git
 git push heroku HEAD:master
 
 # Self destruct. If we made it this far we know the script succeeded
